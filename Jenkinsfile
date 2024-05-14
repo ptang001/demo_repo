@@ -3,7 +3,7 @@ pipeline {
         label 'agent_node'
     }
     environment {
-	DOCKERHUB_PAT = credentials('docker_hub_pat_token')
+	DOCKER_HUB_PAT = credentials('docker_hub_pat_token')
     }
     stages {
         stage('Clone') {
@@ -27,7 +27,7 @@ pipeline {
         stage('Delivery') {
             steps {
                 sh '''
-                    docker login  -u ptan72 -p ${DOCKERHUB_PAT}
+                    docker login  -u ptan72 -p ${DOCKER_HUB_PAT}
                     docker build . -t calcul-chauffage:${BUILD_ID}
                     docker tag calcul-chauffage:v0.0.1 ptan72/calcul-chauffage:${BUILD_ID}
                     docker push ptan72/calcul-chauffage:${BUILD_ID}
