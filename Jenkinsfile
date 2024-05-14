@@ -2,7 +2,9 @@ pipeline {
     agent {
         label 'agent_node'
     }
-
+    environment {
+	DOCKERHUB_PAT: credentials('docker_hub_pat_token')
+    }
     stages {
         stage('Clone') {
             steps {
