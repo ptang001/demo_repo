@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Delivery') {
             steps {
-		withSonarQubeEnv(installationName: 'sql' {
+		withSonarQubeEnv(installationName: 'sql') {
                  sh '''
                     docker login  -u ptan72 -p ${DOCKER_HUB_PAT}
                     docker build . -t calcul-chauffage:${BUILD_ID}
@@ -43,7 +43,7 @@ pipeline {
         }
         stage('Quality Gate') {
             steps {
-		timeout(time: 4, unit: 'MINUTES'){
+		timeout(time: 4, unit: 'MINUTES') {
 			waitForQualityGate abortPipeline: true
 		}
             }
