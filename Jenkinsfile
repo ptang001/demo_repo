@@ -26,14 +26,14 @@ pipeline {
         }
         stage('Delivery') {
             steps {
-		withSonarQubeEnv(installationName: 'Sonarqube1') {
-                 sh '''
-                    docker login  -u ptan72 -p ${DOCKER_HUB_PAT}
-                    docker build . -t calcul-chauffage:${BUILD_ID}
-                    docker tag calcul-chauffage:v0.0.1 ptan72/calcul-chauffage:${BUILD_ID}
-                    docker push ptan72/calcul-chauffage:${BUILD_ID}
-                 '''
-		}
+        		withSonarQubeEnv(installationName: 'Sonarqube1') {
+                    sh '''
+                        docker login  -u ptan72 -p ${DOCKER_HUB_PAT}
+                        docker build . -t calcul-chauffage:${BUILD_ID}
+                        docker tag calcul-chauffage:v0.0.1 ptan72/calcul-chauffage:${BUILD_ID}
+                        docker push ptan72/calcul-chauffage:${BUILD_ID}
+                    '''
+		        }
             }
         }
         stage('Quality') {
