@@ -26,17 +26,26 @@ pipeline {
         }
         stage('Delivery') {
             steps {
-                sh '''
+		withSonarQubeEnv(installationName: 'sql' {
+                 sh '''
                     docker login  -u ptan72 -p ${DOCKER_HUB_PAT}
                     docker build . -t calcul-chauffage:${BUILD_ID}
                     docker tag calcul-chauffage:v0.0.1 ptan72/calcul-chauffage:${BUILD_ID}
                     docker push ptan72/calcul-chauffage:${BUILD_ID}
-                '''
+                 '''
+		}
             }
         }
         stage('Quality') {
             steps {
                 sh 'sonar-scanner -Dsonar.projectKey=reactjs-key -Dsonar.sources=. -Dsonar.host.url=http://172.18.0.5:9000 -Dsonar.token=sqp_206778a76cf8e44aade57068fcc80a89c75a5e63'
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+		timeout(time: 4, unit: 'MINUTES'){
+			waitForQualityGate abortPipeline: true
+		}
             }
         }
     }
