@@ -34,6 +34,11 @@ pipeline {
                 '''
             }
         }
+        stage('Quality') {
+            steps {
+                sh 'sonar-scanner -Dsonar.projectKey=reactjs-key -Dsonar.sources=. -Dsonar.host.url=http://172.18.0.5:9000 -Dsonar.token=sqp_206778a76cf8e44aade57068fcc80a89c75a5e63'
+            }
+        }
     }
     post {  
         always {  
