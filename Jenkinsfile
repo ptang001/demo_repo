@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Delivery') {
             steps {
-		withSonarQubeEnv(installationName: 'sql') {
+		withSonarQubeEnv(installationName: 'Sonarqube1') {
                  sh '''
                     docker login  -u ptan72 -p ${DOCKER_HUB_PAT}
                     docker build . -t calcul-chauffage:${BUILD_ID}
