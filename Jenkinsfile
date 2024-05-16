@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git branch: 'main', url: 'https://github.com/fredericEducentre/reactJS.git'
+                git branch: 'main', credentialsId: 'github_token_demo1', url: 'https://github.com/ptang001/demo_repo.git'
             }
         }
         stage('Build') {
